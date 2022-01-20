@@ -1105,6 +1105,46 @@ const api = {
 	},
 
 	/**
+     * @returns {APIResponse & Programs}
+     */
+	 async programs() {
+        let response = await this.request({
+            path: "/ChuongtrinhDaotaoSinhvien.aspx"
+        });
+
+        response.data = new Array();
+
+        let groupNodes = response.dom.querySelectorAll(`#LeftCol_SinhvienChuongtrinhdaotao1_dlstHocky li.li1Vuong`);
+
+        for (let groupNode of groupNodes) {
+            let group = {
+                name: groupNode.firstElementChild.innerText,
+                subjects: []
+            }
+
+            let itemNodes = groupNode.getElementsByClassName(`liArrow`);
+
+            for (let itemNode of itemNodes) {
+                let item = {
+                    subject: itemNode.firstElementChild.innerText,
+                    requirements: []
+                }
+
+                let reqNodes = itemNode.querySelectorAll(`:scope > ol > li > i`);
+
+                for (let reqNode of reqNodes)
+                    item.requirements.push(reqNode.innerText);
+
+                group.subjects.push(item);
+            }
+
+            response.data.push(group);
+        }
+
+        return response;
+    },
+
+	/**
 	 * API Đăng kí tín chỉ
 	 * 
 	 * @param	{Object}	option
@@ -1359,4 +1399,28 @@ const api = {
  * @property	{Number}				info.cpa
  * @property	{Number}				info.credits
  * @property	{String}				info.grade
+ */
+
+
+/**
+ * Programs object
+ * @typedef        Programs
+ * @type        {Object}
+ * @property    {ProgramGroup[]}        data
+ */
+
+/**
+ * Program Group object
+ * @typedef        ProgramGroup
+ * @type        {Object}
+ * @property    {String}                name                Tên nhóm (học kì)
+ * @property    {ProgramSubject[]}        subjects
+ */
+
+/**
+ * Program Group's Item object
+ * @typedef        ProgramSubject
+ * @type        {Object}
+ * @property    {String}                subject                Tên môn học
+ * @property    {String[]}                requirements        Các môn học tiên quyết
  */
