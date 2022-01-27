@@ -397,53 +397,32 @@ const api = {
 		let totalPoint = 0;
 		let totalCredits = 0;
 		let cpaCredits = 0;
-		// let countSubject = {};
-		// let arr = new Array();
-		// let arr2 = new Array();
-		// results.forEach(result => countSubject[result.subject] ? countSubject[result.subject]++ : countSubject[result.subject] = 1);
-		// for (let i of results)
-		// {
-		// 	if(countSubject[i.subject] > 1)
-		// 	{
-		// 		arr.push(i);
-		// 	}
-		// }
-
-		// for (let i of results)
-		// {
-		// 	for(let j of arr)
-		// 	{
-		// 		if (i.subject == j.subject && i.average > j.average)
-		// 			arr2.push(i);
-		// 		else if (i.subject == j.subject && i.average < j.average)
-		// 			arr2.push(j);
-		// 	}
-		// }
-
-
+		let resultArr = results.map();
+		let lengthArr = resultArr.length();
 		
-		// for (let result of results) {
-		// 	totalCredits += result.credits;
+		for (let i = 0; i < lengthArr; i++)
+		{
+			for (let j = j + 1; j < lengthArr; j++)
+			{
+				if(resultArr[i].subject == resultArr[j].subject)
+				{
+					if(resultArr[i].average >= resultArr[j].average)
+						reresultArrsults.removeItem(j);
+						resultArr.removeItem(i);
+				}
+			}
+		}
 
-		// 	if (typeof result.average === "number" && result.average.point != 0) {
-		// 		if(countSubject[result.subject] == 1)
-		// 		{
-		// 			totalCPA += result.grade.point * result.credits;
-		// 			cpaCredits += result.credits;
-		// 			totalPoint += result.average;
-		// 			count++;
-		// 		} else if(countSubject[i.subject] > 1)
-		// 		{
-		// 			for( let i of arr2)
-		// 			{
-		// 				totalCPA += i.grade.point * i.credits;
-		// 				cpaCredits += i.credits;
-		// 				totalPoint += i.average;
-		// 				count++;
-		// 			}
-		// 		}
-		// 	}
-		// }
+		for (let result of resultArr) {
+			totalCredits += result.credits;
+
+			if (typeof result.average === "number") {
+				totalCPA += result.grade.point * result.credits;
+				cpaCredits += result.credits;
+				totalPoint += result.average;
+				count++;
+			}
+		}
 
 		let average = totalPoint / count;
 		let credits = totalCredits;
