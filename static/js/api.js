@@ -407,8 +407,8 @@ const api = {
 				if(resultArr[i].subject == resultArr[j].subject)
 				{
 					if(resultArr[i].average >= resultArr[j].average)
-						reresultArrsults.removeItem(j);
-						resultArr.removeItem(i);
+						resultArr.removeItem(j);
+					resultArr.removeItem(i);
 				}
 			}
 		}
